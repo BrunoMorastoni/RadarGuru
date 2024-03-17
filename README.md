@@ -1,5 +1,4 @@
 # Radar Guru
 ## _Melhor aplicativo de radar, feito até hoje_
 
-![Logo]([https://imgur.com/a/YiyosK5)
-](https://imgur.com/a/YiyosK5)https://imgur.com/a/YiyosK5
+![GURU](https://imgur.com/a/YiyosK5)
