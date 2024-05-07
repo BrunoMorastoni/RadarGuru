@@ -14,10 +14,10 @@ O RadarGuru é um projeto que utiliza os módulos ESP8266, NEO-6M GPS, display O
 - **Interatividade**: Os botões permitem ao usuário interagir com o dispositivo, configurando preferências, silenciando notificações ou alternando entre os modos de exibição.
 
 ## Tecnologias Utilizadas
--  **Microcontrolador: ESP8266
--  **Módulo GPS: NEO6MV2
--  **Display: OLED (128x64)
--  **Indicadores Visuais: LEDs
--  **Interatividade: Botões
--  **Feedback Sonoro: Buzzer
--  **Modelagem e Impressão 3D: Para o desenvolvimento do produto final.
+-  **Microcontrolador**: ESP8266
+-  **Módulo GPS**: NEO6MV2
+-  **Display**: OLED (128x64)
+-  **Indicadores Visuais**: LEDs
+-  **Interatividade**: Botões
+-  **Feedback Sonoro**: Buzzer
+-  **Modelagem e Impressão 3D**: Para o desenvolvimento do produto final.
