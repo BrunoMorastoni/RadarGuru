@@ -1,9 +1,0 @@
-Descrição:
-Teste de velocímetro com indicações do leds sobre limites de velocidade.
-
-Componentes usados:
-3x Led Verde/Amarelo/Vermelho
-2x Botões (4pins)
-1x Display Oled (4pins)
-5x Resistores [2x 10k Ω / 3x 100 Ω]
-14x Cabos jumpers
