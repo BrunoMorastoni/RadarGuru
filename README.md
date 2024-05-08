@@ -21,3 +21,9 @@ O RadarGuru é um projeto que utiliza os módulos ESP8266, NEO-6M GPS, display O
 -  **Interatividade**: Botões
 -  **Feedback Sonoro**: Buzzer
 -  **Modelagem e Impressão 3D**: Para o desenvolvimento do produto final.
+
+## Atenção
+O Radar Guru segue completamente as diretrizes da [Resolução 242](https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-contran/resolucoes/resolucao_contran_242.pdf) do Contran. 
+Sua principal função é avisar o condutor sobre pontos de controle ou de velocidade previamente definidos e informados na via. 
+Ele não funciona como um dispositivo antiradar, já que não consegue detectar sinais de radar nem interferir na medição da velocidade real do veículo. 
+É fundamental ter em mente que, caso o usuário do Radar Guru exceda o limite de velocidade em uma fiscalização eletrônica, receberá uma multa como de costume.
