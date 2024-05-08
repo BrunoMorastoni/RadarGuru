@@ -85,7 +85,8 @@ FrameCallback frames[] = {radarguru, leds, satellite, button, info};
 int frameCount = 5;
 
 // BUTTON PREVIOUS
-void previous() {
+void previous() {                         
+pinMode(BUT_1, INPUT_PULLUP);
 if (BUT_1_STAT == LOW) {
   display.clear();
   ui.previousFrame();
@@ -94,6 +95,7 @@ if (BUT_1_STAT == LOW) {
   }
 // BUTTON NEXT
 void next() {
+pinMode(BUT_2, INPUT_PULLUP);
 if (BUT_2_STAT == LOW) { 
   display.clear();
   ui.nextFrame();
@@ -102,6 +104,7 @@ if (BUT_2_STAT == LOW) {
   }
 // BUTTON SELECT
 void select() {
+  pinMode(BUT_3, INPUT_PULLUP);
   if (BUT_3_STAT == LOW) { 
   display.clear();
   ui.update();
@@ -110,12 +113,6 @@ void select() {
 void setup() {
 
   Serial.begin(115200);
-
-  // Buttons
-  pinMode(BUT_1, INPUT_PULLUP);
-  pinMode(BUT_2, INPUT_PULLUP);
-  pinMode(BUT_3, INPUT_PULLUP);
-
   // The ESP is capable of rendering 60fps in 80Mhz mode
   // but that won't give you much time for anything else
   // run it in 160Mhz mode or just set it to 30 fps
@@ -144,10 +141,6 @@ void loop() {
     ui.update();
   }
   
-  BUT_1_STAT = digitalRead(BUT_1);
-  BUT_2_STAT = digitalRead(BUT_2);
-  BUT_3_STAT = digitalRead(BUT_3);
-
   previous();
   next();
   select();
