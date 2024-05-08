@@ -87,7 +87,7 @@ void faltitude() {
   display.drawString(25,22, altitude+" m");
 }
 //----------------------------------------LATITUDE AND LONGITUDE FUNCTION----------------------------------------//
-void falt_lng() {
+void faltitude_longitude() {
 
   //LATITUDE//
   String latitude = String(gps.location.lat(), 6);
@@ -97,8 +97,6 @@ void falt_lng() {
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.drawString(25,0,latitude);
-  //LATITIDE SERIAL PRINT//
-  Serial.print("Latitude: "+latitude);
 
   //LONGITUDE//
   String longitude = String(gps.location.lng(), 6);
@@ -108,9 +106,10 @@ void falt_lng() {
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.drawString(25,12,longitude);
-  //LATITIDE SERIAL PRINT//
-  Serial.println(" Longitude: "+longitude);
 
+  //LATITIDE AND LONGITUDE SERIAL PRINT//
+  Serial.print("Latitude: "+latitude);
+  Serial.println(" Longitude: "+longitude);
   Serial.print("");
   Serial.println("------------------------------------------");
   Serial.print("");
@@ -148,10 +147,10 @@ void loop() {
       fspeed();
       fsatellites();
       //faltitude();
-      falt_lng();
+      faltitude_longitude();
 
       display.display();
-      delay(1500);
+      delay(100);
       display.clear();
     } 
     else {
