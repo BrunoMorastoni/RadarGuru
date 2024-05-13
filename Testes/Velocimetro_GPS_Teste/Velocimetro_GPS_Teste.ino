@@ -19,32 +19,64 @@ const unsigned char bitmap_icon_satellite [] PROGMEM = {
 };
 
 void satellites() {
-  String satellites = String(gps.satellites.value(), 3);
-  display.drawXbm(112, 0, 16, 16, bitmap_icon_satellite);
-  display.setFont(ArialMT_Plain_10);
-  display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.drawString(91,0,satellites);
+  if (gps.satellites.isValid()) {
+    String satellites = String(gps.satellites.value(), 3);
+    display.drawXbm(112, 0, 16, 16, bitmap_icon_satellite);
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display.drawString(91,0,satellites);
+  } else {
+    display.drawXbm(112, 0, 16, 16, bitmap_icon_satellite);
+  }
 }
 //----------------------------------------ALTITUDE----------------------------------------//
 void altitude() {
-  String altitude = String(gps.altitude.meters(), 2);
-  display.setFont(ArialMT_Plain_10);
-  display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.drawString(0,22,"ALT:");
-  display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(25,22, altitude+" m");
+  if (gps.altitude.isValid()) {
+    String altitude = String(gps.altitude.meters(), 2);
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display.drawString(0,22,"ALT:");
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display.setFont(ArialMT_Plain_10);
+    display.drawString(25,22, altitude+" m");
+  } else {
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display.drawString(0,22,"ALT: X");
+  }
+}
+//----------------------------------------COG----------------------------------------//
+void course_over_ground() {
+  if (gps.course.isValid()) {
+    String cog = String(gps.course.deg(), 2);
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_RIGHT);
+    display.drawString(0,22,"COG:");
+    display.setTextAlignment(TEXT_ALIGN_RIGHT);
+    display.setFont(ArialMT_Plain_10);
+    display.drawString(35,22, cog+"º");
+     
+    //LATITIDE AND LONGITUDE SERIAL PRINT//
+    Serial.print("COG: "+cog+"º");
+    Serial.print("");
+    Serial.println("------------------------------------------");
+    Serial.print("");
+  } else {
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_RIGHT);
+    display.drawString(0,22,"COG: X");
+  }
 }
 //----------------------------------------CARDINAL----------------------------------------//
-// 'cardinalstar', 16x16px
-const unsigned char bitmap_cardinalstar [] PROGMEM = {
-	0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0xc0, 0x03, 0xfc, 0x3f, 
-	0xfc, 0x3f, 0xc0, 0x03, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x00, 0x00, 0x00, 0x00
+// 'cardinal_nosignal', 16x16px
+const unsigned char bitmap_cardinal_nosignal [] PROGMEM = {
+	0x80, 0x01, 0x80, 0x01, 0x40, 0x02, 0x40, 0x02, 0x20, 0x04, 0x20, 0x04, 0x10, 0x08, 0x10, 0x08, 
+	0x08, 0x10, 0x08, 0x10, 0x04, 0x20, 0x04, 0x20, 0x02, 0x40, 0x02, 0x40, 0x01, 0x80, 0xff, 0xff
 };
-// 'cardinalstar2', 16x16px
-const unsigned char bitmap_cardinalstar2 [] PROGMEM = {
-	0x00, 0x00, 0x80, 0x01, 0x90, 0x29, 0x88, 0x11, 0x94, 0x29, 0xa0, 0x05, 0xc2, 0x43, 0xfe, 0x7f, 
-	0xfe, 0x7f, 0xc2, 0x43, 0xa0, 0x45, 0x94, 0x09, 0x88, 0x31, 0x94, 0x31, 0xe0, 0x07, 0x00, 0x00
+// 'cardinal_signal', 16x16px
+const unsigned char bitmap_cardinal_signal [] PROGMEM = {
+	0x80, 0x01, 0x80, 0x01, 0xc0, 0x03, 0xc0, 0x03, 0xe0, 0x07, 0xe0, 0x07, 0xf0, 0x0f, 0xf0, 0x0f, 
+	0xf8, 0x1f, 0xf8, 0x1f, 0xfc, 0x3f, 0xfc, 0x3f, 0xfe, 0x7f, 0xfe, 0x7f, 0xff, 0xff, 0xff, 0xff
 };
 
 String cardinal(double azimuth) {
@@ -62,14 +94,14 @@ void cardinal() {
     String cardinal_direction = cardinal(azimuth);
     display.setFont(ArialMT_Plain_10);
     display.setTextAlignment(TEXT_ALIGN_LEFT);
-    display.drawXbm(0, 0,16,16,bitmap_cardinalstar);
+    display.drawXbm(0, 0,16,16,bitmap_cardinal_signal);
     display.setFont(ArialMT_Plain_10);
     display.setTextAlignment(TEXT_ALIGN_LEFT);
-    display.drawString(25, 0, cardinal_direction);
+    display.drawString(18, 3, cardinal_direction);
   } else {
     display.setFont(ArialMT_Plain_10);
     display.setTextAlignment(TEXT_ALIGN_LEFT);
-    display.drawXbm(0, 0, 16, 16, bitmap_cardinalstar2);
+    display.drawXbm(0, 0, 16, 16, bitmap_cardinal_nosignal);
   }
 }
 //----------------------------------------LATITUDE AND LONGITUDE FUNCTION----------------------------------------//
@@ -136,19 +168,20 @@ void loop() {
       }
     }
   }
-    if (gps.speed.isValid()) {                                                        
+  if (gps.speed.isValid()) {                                                        
 
       speedometer();
       satellites();
       cardinal();
+      //course_over_ground();
       //faltitude();
       //altitude_longitude();
 
       display.display();
-      delay(500);
+      //delay(500);                                                                         // Delay test                                                                            
       display.clear();
     } 
-     else { // If the speed isnt avaible will show a message
+     else {                                                                                 //If the speed isnt avaible will show a message
        display.setFont(ArialMT_Plain_16);
        display.setTextAlignment(TEXT_ALIGN_CENTER_BOTH);
        display.drawString(64, 23, "Por Favor Espere");
